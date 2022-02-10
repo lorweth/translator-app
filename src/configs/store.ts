@@ -1,6 +1,6 @@
 import { AnyAction, configureStore, ThunkAction } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import reducers from 'reducers';
+import reducers from 'src/reducers';
 import loggerMiddleware from './logger-middleware';
 
 const store = configureStore({

@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
     entry: "./src/index.tsx",
@@ -26,6 +27,11 @@ module.exports = {
                 use: ["babel-loader"],
             },
             {
+                test: /\.js$/,
+                enforce: 'pre',
+                use: ['source-map-loader'],
+            },
+            {
                 test: /\.(ts|tsx)$/,
                 exclude: /node_modules/,
                 use: ["ts-loader"],
@@ -43,6 +49,14 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: path.join(__dirname, "public", "index.html"),
+        }),
+        new CopyPlugin({
+            patterns: [
+                {from: "public/favicon.ico", to: ""},
+                {from: "public/logo192.png", to: ""},
+                {from: "public/logo512.png", to: ""},
+                {from: "public/manifest.json", to: ""},
+            ]
         }),
     ],
 };

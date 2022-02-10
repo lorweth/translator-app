@@ -1,6 +1,6 @@
 {
-  "short_name": "WReact PWA",
-  "name": "WReact Progessive Web App",
+  "short_name": "Translator",
+  "name": "Translator web application",
   "icons": [
     {
       "src": "favicon.ico",

@@ -1,6 +1,8 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faArrowLeft,
+  faArrowRight,
+  faBars,
   faMinus,
   faPlay,
   faPlus,
@@ -23,7 +25,10 @@ export const loadIcon = () => {
     faTrash,
     faUser,
     faPlay,
-    faSpinner
+    faSpinner,
+    faBars,
+    faArrowLeft,
+    faArrowRight
     // Add more icons here
   );
 };

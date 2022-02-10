@@ -1,6 +1,6 @@
-import App from 'app';
-import { loadIcon } from 'configs/icon-loaders';
-import getStore from 'configs/store';
+import App from 'src/app';
+import { loadIcon } from './configs/icon-loaders';
+import getStore from './configs/store';
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
