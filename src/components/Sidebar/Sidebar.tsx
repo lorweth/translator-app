@@ -11,13 +11,40 @@ import {
   Toolbar,
 } from '@mui/material';
 import React from 'react';
+import ListItemLink from '../ListItemLink/ListItemLink';
 
 export type SidebarItem = {
   text: string;
   icon: IconProp;
 };
 
-const Siderbar = ({ container, isOpen, onClose, listSidebarItems, sidebarWidth }) => {
+type DisplaySidebarProps = {
+  items: SidebarItem[];
+};
+
+const DisplaySidebarItems = ({ items }: DisplaySidebarProps) => (
+  <List>
+    {items.map((data, index) => (
+      <ListItemLink
+        key={index}
+        icon={<FontAwesomeIcon icon={data.icon} />}
+        primary={data.text}
+        to={data.text}
+      />
+    ))}
+  </List>
+);
+
+type SidebarProps = {
+  items: SidebarItem[];
+  isOpen: boolean;
+  onClose: any;
+  container: any;
+  sidebarWidth: number;
+};
+
+const Siderbar = (props: SidebarProps) => {
+  const { container, isOpen, onClose, items, sidebarWidth } = props;
   return (
     <Box
       component="nav"
@@ -39,16 +66,7 @@ const Siderbar = ({ container, isOpen, onClose, listSidebarItems, sidebarWidth }
       >
         <Toolbar />
         <Divider />
-        <List>
-          {listSidebarItems.map((data, index) => (
-            <ListItem button key={data.text}>
-              <ListItemIcon>
-                <FontAwesomeIcon icon={data.icon} />
-              </ListItemIcon>
-              <ListItemText primary={data.text} />
-            </ListItem>
-          ))}
-        </List>
+        <DisplaySidebarItems items={items} />
       </Drawer>
       <Drawer
         variant="permanent"
@@ -60,16 +78,7 @@ const Siderbar = ({ container, isOpen, onClose, listSidebarItems, sidebarWidth }
       >
         <Toolbar />
         <Divider />
-        <List>
-          {listSidebarItems.map((data, index) => (
-            <ListItem button key={data.text}>
-              <ListItemIcon>
-                <FontAwesomeIcon icon={data.icon} />
-              </ListItemIcon>
-              <ListItemText primary={data.text} />
-            </ListItem>
-          ))}
-        </List>
+        <DisplaySidebarItems items={items} />
       </Drawer>
     </Box>
   );

@@ -1,19 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  AppBar,
-  Box,
-  Divider,
-  Drawer,
-  IconButton,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Toolbar,
-  Typography,
-} from '@mui/material';
+import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import Siderbar, { SidebarItem } from './components/sidebar';
+import Siderbar, { SidebarItem } from './components/Sidebar/Sidebar';
+import { Outlet as RouterOutlet } from 'react-router-dom';
 
 interface AppProps {
   /**
@@ -74,8 +63,16 @@ const App = (props: AppProps) => {
         isOpen={isOpenSidebar}
         onClose={handleToggleSidebar}
         sidebarWidth={sidebarWidth}
-        listSidebarItems={listSidebarItems}
+        items={listSidebarItems}
       />
+      <Box
+        component="main"
+        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${sidebarWidth}px)` } }}
+      >
+        <Toolbar />
+        {/* Router Outlet here */}
+        <RouterOutlet />
+      </Box>
     </Box>
   );
 };
