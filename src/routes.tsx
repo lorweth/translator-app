@@ -5,7 +5,7 @@ import Profile from './pages/ProfilePage/ProfilePage';
 import Training from './pages/TrainingPage/TrainingPage';
 import Translate from './pages/TranslatePage/TranslatePage';
 import Video from './pages/VideoPage/VideoPage';
-import Welcome from './pages/WelcomePage/WelcomePage';
+import Welcome, { WelcomeName } from './pages/WelcomePage/WelcomePage';
 
 // export interface RouteProps {
 //   caseSensitive?: boolean;
@@ -30,12 +30,16 @@ const Routes: Routes = [
     element: <App />,
     children: [
       { path: '/', element: <Welcome /> },
-      { path: '/welcome', element: <Welcome /> },
-      { path: '/favorites', element: <Favorites /> },
-      { path: '/training', element: <Training /> },
-      { path: '/video', element: <Video /> },
-      { path: '/translate', element: <Translate /> },
-      { path: '/profile', element: <Profile /> },
+      {
+        path: 'welcome',
+        element: <Welcome />,
+        children: [{ path: ':name', element: <WelcomeName /> }],
+      },
+      { path: 'favorites', element: <Favorites /> },
+      { path: 'training', element: <Training /> },
+      { path: 'video', element: <Video /> },
+      { path: 'translate', element: <Translate /> },
+      { path: 'profile', element: <Profile /> },
     ],
   },
   // Add some route here
