@@ -11,6 +11,9 @@ module.exports = {
     mode: process.env.NODE_ENV,
     resolve: {
         extensions: [".tsx", ".ts", ".js"],
+        alias: {
+            "src": path.resolve('./src')
+        }
     },
     devServer: { 
         static: path.join(__dirname, "build")
