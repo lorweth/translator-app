@@ -7,7 +7,6 @@ module.exports = {
     output: { 
         path: path.join(__dirname, "build"), 
         filename: "index.bundle.js",
-        publicPath: '/',
         sourceMapFilename: "[name].js.map"
     },
     mode: process.env.NODE_ENV,
@@ -19,6 +18,8 @@ module.exports = {
     },
     devServer: { 
         static: path.join(__dirname, "build"),
+        hot:true,
+        port: 3000,
         historyApiFallback: true,
     },
     module: {
