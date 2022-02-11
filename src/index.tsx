@@ -16,7 +16,12 @@ loadIcon();
 // Render UI
 render(
   <Provider store={store}>
-    <BrowserRouter>{RouteBuilder(routes)}</BrowserRouter>
+    <BrowserRouter>
+      {RouteBuilder(routes)}
+      {/* <Routes>
+        <Route path="/" element={<App />} />
+      </Routes> */}
+    </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 );
