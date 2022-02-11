@@ -5,13 +5,13 @@ const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const { DIST, SRC } = require('./constants');
+const { DIST, PUBLIC } = require('./constants');
 
 module.exports = {
   mode: 'production',
   output: {
     path: DIST,
-    publicPath: '/translator/',
+    publicPath: '/',
     filename: '[name].[contenthash].js',
   },
   optimization: {
@@ -37,9 +37,25 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         {
-          from: resolve(SRC, '404.html'),
+          from: resolve(PUBLIC, '404.html'),
           to: DIST,
         },
+        {
+          from: resolve(PUBLIC, 'favicon.ico'),
+          to: DIST,
+        },
+        {
+          from: resolve(PUBLIC, 'manifest.json'),
+          to: DIST,
+        },
+        {
+          from: resolve(PUBLIC, 'logo192.png'),
+          to: DIST,
+        },
+        {
+          from: resolve(PUBLIC, 'logo512.png'),
+          to: DIST,
+        }
       ],
       options: {
         concurrency: 100,
@@ -65,7 +81,7 @@ module.exports = {
               importLoaders: 1,
             },
           },
-          // 'postcss-loader',
+          'postcss-loader',
         ],
         exclude: /\.module\.css$/,
       },
@@ -82,7 +98,7 @@ module.exports = {
               },
             },
           },
-          // 'postcss-loader',
+          'postcss-loader',
         ],
         include: /\.module\.css$/,
       },

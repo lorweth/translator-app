@@ -2,6 +2,7 @@ const { resolve } = require('path');
 const { DefinePlugin, HotModuleReplacementPlugin } = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { DIST } = require('./constants');
+const path = require('path');
 
 module.exports = {
   mode: 'development',
@@ -12,10 +13,22 @@ module.exports = {
   },
   devtool: 'eval-cheap-module-source-map',
   devServer: {
+    // All options here: https://webpack.js.org/configuration/dev-server/
+
+    // enable HMR on the server
     hot: true,
+
+    // Enable to integrate with Docker
+    //host:"0.0.0.0",
+
     port: 3000,
     open: false,
     historyApiFallback: true,
+
+    // Join publicPath to devServer
+    static: {
+      directory: path.join(__dirname, "../public") // __dirname: /webpack
+    },
   },
   plugins: [
     new MiniCssExtractPlugin({
