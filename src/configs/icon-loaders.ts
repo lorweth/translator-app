@@ -20,6 +20,7 @@ import {
   faTasks,
   faTrash,
   faUser,
+  faUserShield,
   faX,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -44,7 +45,8 @@ export const loadIcon = () => {
     faGraduationCap,
     faHeart,
     faStar,
-    faClapperboard
+    faClapperboard,
+    faUserShield
     // Add more icons here
   );
 };

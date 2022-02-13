@@ -3,6 +3,8 @@ import { AppBar, Box, IconButton, Toolbar, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import Siderbar, { SidebarItem } from './components/Sidebar/Sidebar';
 import { Outlet as RouterOutlet } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface AppProps {
   /**
@@ -34,6 +36,11 @@ const App = (props: AppProps) => {
 
   return (
     <Box sx={{ display: 'flex' }}>
+      <ToastContainer
+        position={toast.POSITION.TOP_LEFT}
+        className="toastify-container"
+        toastClassName="toastify-toast"
+      />
       <AppBar
         position="fixed"
         sx={{
