@@ -5,7 +5,7 @@ import { StorageAPI } from 'src/shared/util/storage-util';
 import { serializeAxiosError } from './reducer.utils';
 
 const AUTH_TOKEN_KEY = 'authToken';
-const API_URL = 'http://localhost:8080';
+const API_URL = process.env.API_URL;
 
 export const initialState = {
   loading: false,

@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { serializeAxiosError } from 'src/shared/reducers/reducer.utils';
 
-const API_URL = 'http://localhost:8080';
+const API_URL = process.env.API_URL;
 
 const initialState = {
   loading: false,

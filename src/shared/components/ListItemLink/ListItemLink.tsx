@@ -1,7 +1,6 @@
 import { ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import React from 'react';
 import { Link as RouterLink, LinkProps as RouterLinkProps } from 'react-router-dom';
-import { capitalizeFirstLetter } from 'src/functions/string-utils';
 
 interface ListItemLinkProps {
   icon?: React.ReactElement;
