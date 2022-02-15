@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server",
     "start": "npm run dev",
-    "build": "cross-env NODE_ENV=production webpack",
+    "build": "rm -rf build && cross-env NODE_ENV=production webpack",
     "clean": "rm -rf build && rm -rf node_modules && npm install",
     "lint:file": "cross-env eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "lint": "cross-env eslint . --ext .js,.jsx,.ts,.tsx --fix.",

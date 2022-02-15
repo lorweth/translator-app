@@ -4,6 +4,7 @@ import {
   faArrowLeft,
   faArrowRight,
   faBars,
+  faBell,
   faBook,
   faClapperboard,
   faGraduationCap,
@@ -48,7 +49,8 @@ export const loadIcon = () => {
     faStar,
     faClapperboard,
     faUserShield,
-    faAddressCard
+    faAddressCard,
+    faBell
     // Add more icons here
   );
 };

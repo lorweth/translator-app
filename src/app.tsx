@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, useRoutes } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import ROUTES from './routes';
+import MainLayout from 'src/shared/layouts/main-layout';
 
 const BrowerRouterProvider = () => {
   const routeElements = useRoutes(ROUTES);
@@ -11,7 +12,9 @@ const BrowerRouterProvider = () => {
 const App = () => {
   return (
     <Router>
-      <BrowerRouterProvider />
+      <MainLayout>
+        <BrowerRouterProvider />
+      </MainLayout>
     </Router>
   );
 };
