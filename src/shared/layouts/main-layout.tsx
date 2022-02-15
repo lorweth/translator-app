@@ -35,7 +35,7 @@ interface AppProps {
 const lightTheme = createTheme();
 
 const MainLayout = (props: AppProps) => {
-  const { window } = props;
+  const { window, children } = props;
   const [isOpenSidebar, setOpenSidebar] = useState(true);
   const container = window !== undefined ? () => window().document.body : undefined;
 
@@ -83,7 +83,7 @@ const MainLayout = (props: AppProps) => {
         >
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Suspense fallback={<LinearProgress color="secondary" />}>{props.children}</Suspense>
+            {children}
           </Container>
         </Box>
       </Box>
