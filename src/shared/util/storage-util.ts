@@ -64,7 +64,7 @@ export interface IStorageService {
   local: IStorageAPI;
 }
 
-export const Storage: IStorageService = {
+export const StorageAPI: IStorageService = {
   session: {
     get: getItem(StorageType.SESSION),
     set: setItem(StorageType.SESSION),

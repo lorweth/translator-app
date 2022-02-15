@@ -1,5 +1,6 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
+  faAddressCard,
   faArrowLeft,
   faArrowRight,
   faBars,
@@ -46,7 +47,8 @@ export const loadIcon = () => {
     faHeart,
     faStar,
     faClapperboard,
-    faUserShield
+    faUserShield,
+    faAddressCard
     // Add more icons here
   );
 };

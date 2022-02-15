@@ -1,17 +1,15 @@
-import { Button } from '@mui/material';
+import { Button, Link } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'src/configs/store';
-import { getAccount, logout } from 'src/reducers/authentication';
-import { Storage } from 'src/util/storage-util';
+import { getAccount, logout } from 'src/shared/reducers/authentication';
+import { StorageAPI } from 'src/shared/util/storage-util';
 
 const Welcome = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { username, firstName, lastName } = useAppSelector(state => state.authentication.account);
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    Storage.local.get('authToken') || Storage.session.get('authToken')
-  );
+  const isLoggedIn = !!(StorageAPI.local.get('authToken') || StorageAPI.session.get('authToken'));
   const isAuthenticated = useAppSelector(state => state.authentication.isAuthenticated);
 
   useEffect(() => {
@@ -37,8 +35,12 @@ const Welcome = () => {
           <Button variant="outlined" onClick={() => navigate('/login')}>
             Please Signin!
           </Button>
-          <p>If you not have a account</p>
-          <Button onClick={() => navigate('/signup')}>Please Signup!</Button>
+          <p>
+            If you do not already have an account{' '}
+            <Link href="/signup" variant="body1">
+              Signup!
+            </Link>
+          </p>
         </div>
       )}
     </div>

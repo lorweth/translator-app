@@ -1,10 +1,9 @@
 /* eslint-disable no-console */
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import { WRouteProps } from 'src/routes';
+import { Route, RouteObject, Routes } from 'react-router-dom';
 
 // Render Route
-export const RenderRoute = (routeData: WRouteProps) =>
+export const RenderRoute = (routeData: RouteObject) =>
   routeData.children && routeData.children.length > 0 ? (
     <Route
       key={routeData.path}
@@ -12,7 +11,7 @@ export const RenderRoute = (routeData: WRouteProps) =>
       element={routeData.element}
       index={routeData.index}
     >
-      {routeData.children.map((child: WRouteProps) => RenderRoute(child))}
+      {routeData.children.map((child: RouteObject) => RenderRoute(child))}
     </Route>
   ) : (
     <Route
@@ -23,8 +22,8 @@ export const RenderRoute = (routeData: WRouteProps) =>
     />
   );
 
-const RoutesBuilder = (routes: WRouteProps[]) => (
-  <Routes>{routes.map((routeData: WRouteProps) => RenderRoute(routeData))}</Routes>
+const RoutesBuilder = (routes: RouteObject[]) => (
+  <Routes>{routes.map((routeData: RouteObject) => RenderRoute(routeData))}</Routes>
 );
 
 export default RoutesBuilder;

@@ -3,9 +3,7 @@ import getStore from 'src/configs/store';
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
-import routes from './routes';
-import RouteBuilder from './functions/RouteBuilder';
+import App from './app';
 
 // Get store
 const store = getStore();
@@ -16,12 +14,7 @@ loadIcon();
 // Render UI
 render(
   <Provider store={store}>
-    <BrowserRouter>
-      {RouteBuilder(routes)}
-      {/* <Routes>
-        <Route path="/" element={<App />} />
-      </Routes> */}
-    </BrowserRouter>
+    <App />
   </Provider>,
   document.getElementById('root')
 );

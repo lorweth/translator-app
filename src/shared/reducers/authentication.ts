@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios, { AxiosResponse } from 'axios';
 import { AppThunk } from 'src/configs/store';
-import { Storage } from 'src/util/storage-util';
+import { StorageAPI } from 'src/shared/util/storage-util';
 import { serializeAxiosError } from './reducer.utils';
 
 const AUTH_TOKEN_KEY = 'authToken';
@@ -30,7 +30,7 @@ export const getAccount = createAsyncThunk(
     axios.get<any>(`${API_URL}/users/profile`, {
       headers: {
         Authorization: `Bearer ${
-          Storage.local.get(AUTH_TOKEN_KEY) || Storage.session.get(AUTH_TOKEN_KEY)
+          StorageAPI.local.get(AUTH_TOKEN_KEY) || StorageAPI.session.get(AUTH_TOKEN_KEY)
         }`,
       },
     }),
@@ -62,26 +62,26 @@ export const signin: (username: string, password: string, rememberMe?: boolean) 
     if (bearerToken && bearerToken.slice(0, 7) === 'Bearer ') {
       const jwt = bearerToken.slice(7, bearerToken.length);
       if (rememberMe) {
-        Storage.local.set(AUTH_TOKEN_KEY, jwt);
+        StorageAPI.local.set(AUTH_TOKEN_KEY, jwt);
       } else {
-        Storage.session.set(AUTH_TOKEN_KEY, jwt);
+        StorageAPI.session.set(AUTH_TOKEN_KEY, jwt);
       }
     } else {
       if (rememberMe) {
-        Storage.local.set(AUTH_TOKEN_KEY, bearerToken);
+        StorageAPI.local.set(AUTH_TOKEN_KEY, bearerToken);
       } else {
-        Storage.session.set(AUTH_TOKEN_KEY, bearerToken);
+        StorageAPI.session.set(AUTH_TOKEN_KEY, bearerToken);
       }
     }
     // Set local lang key
   };
 
 export const clearAuthToken = () => {
-  if (Storage.local.get(AUTH_TOKEN_KEY)) {
-    Storage.local.remove(AUTH_TOKEN_KEY);
+  if (StorageAPI.local.get(AUTH_TOKEN_KEY)) {
+    StorageAPI.local.remove(AUTH_TOKEN_KEY);
   }
-  if (Storage.session.get(AUTH_TOKEN_KEY)) {
-    Storage.session.remove(AUTH_TOKEN_KEY);
+  if (StorageAPI.session.get(AUTH_TOKEN_KEY)) {
+    StorageAPI.session.remove(AUTH_TOKEN_KEY);
   }
 };
 
