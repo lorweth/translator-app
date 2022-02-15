@@ -2,7 +2,6 @@ import React from 'react';
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -12,6 +11,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Alert, AlertTitle, Modal } from '@mui/material';
+import { Controller, useForm } from 'react-hook-form';
 
 export interface ISignInModalProps {
   showModal: boolean;
@@ -21,22 +21,23 @@ export interface ISignInModalProps {
 }
 
 const SignInModal = (props: ISignInModalProps) => {
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      username: '',
+      password: '',
+      remember: false,
+    },
+  });
+
   const { showModal, loginError, handleLogin, handleClose } = props;
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const username = data.get('username') as string;
-    const password = data.get('password') as string;
-    const rememberMe = data.get('rememberMe') as string;
-    // eslint-disable-next-line no-console
-    console.log({
-      username,
-      password,
-      rememberMe: rememberMe === 'true',
-    });
-    handleLogin(username, password, rememberMe === 'true');
-  };
+  const onSubmit = values => handleLogin(values.username, values.password, values.remember);
+
+  // const onSubmit = values => alert(JSON.stringify(values, null, 2));
 
   return (
     <Modal open={showModal} onClose={handleClose}>
@@ -67,33 +68,55 @@ const SignInModal = (props: ISignInModalProps) => {
             <p>Invalid username or password</p>
           </Alert>
         )}
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="username"
-            label="Username Address"
+        <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{ mt: 1 }}>
+          <Controller
+            control={control}
             name="username"
-            autoComplete="username"
-            autoFocus
+            rules={{ required: true }}
+            render={({ field }) => (
+              <TextField
+                margin="normal"
+                fullWidth
+                label="Username"
+                autoComplete="username"
+                error={!!errors.username}
+                helperText={errors.username && 'Please enter a username'}
+                autoFocus
+                {...field}
+              />
+            )}
           />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
+
+          <Controller
+            control={control}
             name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
+            rules={{ required: true }}
+            render={({ field }) => (
+              <TextField
+                margin="normal"
+                type="password"
+                required
+                fullWidth
+                label="Password"
+                error={!!errors.password}
+                helperText={errors.password && 'Please enter a password'}
+                autoComplete="current-password"
+                {...field}
+              />
+            )}
           />
-          <FormControlLabel
-            id="rememberMe"
-            name="rememberMe"
-            control={<Checkbox value="true" color="primary" />}
-            label="Remember me"
+
+          <Controller
+            control={control}
+            name="remember"
+            render={({ field: { value, onChange } }) => (
+              <FormControlLabel
+                control={<Checkbox checked={value} onChange={onChange} />}
+                label="Remember Me"
+              />
+            )}
           />
+
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
             Sign In
           </Button>
@@ -115,3 +138,4 @@ const SignInModal = (props: ISignInModalProps) => {
   );
 };
 export default SignInModal;
+// https://dev.to/elyngved/turn-anything-into-a-form-field-with-react-hook-form-controller-42c

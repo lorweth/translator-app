@@ -6,9 +6,10 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Alert, AlertTitle, Modal } from '@mui/material';
+import { Alert, AlertTitle, Checkbox, FormControlLabel, Modal } from '@mui/material';
 import Link from '@mui/material/Link';
 import { toast } from 'react-toastify';
+import { Controller, useForm } from 'react-hook-form';
 
 export interface ISignUpModalProps {
   showModal: boolean;
@@ -18,19 +19,28 @@ export interface ISignUpModalProps {
 }
 
 const SignUpModal = (props: ISignUpModalProps) => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      username: '',
+      password: '',
+      retypePassword: '',
+      firstname: '',
+      lastname: '',
+    },
+  });
+
   const { showModal, errorMessage, handleSignUp, handleClose } = props;
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const username = data.get('username') as string;
-    const password = data.get('password') as string;
-    const retypepassword = data.get('retype-password') as string;
-    const firstname = data.get('firstname') as string;
-    const lastname = data.get('lastname') as string;
+  // const onSubmit = values => alert(JSON.stringify(values, null, 2));
 
-    if (password !== retypepassword) {
-      toast.error('Password and retype password does not match');
+  const onSubmit = values => {
+    const { username, password, retypePassword, firstname, lastname } = values;
+    if (password !== retypePassword) {
+      toast.error('Passwords do not match');
     } else {
       handleSignUp(username, password, firstname, lastname);
     }
@@ -65,67 +75,105 @@ const SignUpModal = (props: ISignUpModalProps) => {
             <p>{errorMessage}</p>
           </Alert>
         )}
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField
-                autoComplete="given-name"
+              <Controller
+                control={control}
                 name="firstname"
-                required
-                fullWidth
-                id="firstname"
-                label="First Name"
-                autoFocus
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <TextField
+                    fullWidth
+                    autoComplete="given-name"
+                    label="First Name"
+                    autoFocus
+                    error={!!errors.firstname}
+                    helperText={errors.firstname && 'Please enter your first name'}
+                    {...field}
+                  />
+                )}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                id="lastname"
-                label="Last Name"
+              <Controller
+                control={control}
                 name="lastname"
-                autoComplete="family-name"
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <TextField
+                    fullWidth
+                    label="Last Name"
+                    autoComplete="family-name"
+                    error={!!errors.lastname}
+                    helperText={errors.lastname && 'Please enter your last name'}
+                    {...field}
+                  />
+                )}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                id="username"
-                label="Username"
+              <Controller
+                control={control}
                 name="username"
-                autoComplete="username"
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <TextField
+                    fullWidth
+                    label="Username"
+                    error={!!errors.username}
+                    helperText={errors.username && 'Please enter a username'}
+                    {...field}
+                  />
+                )}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
+              <Controller
+                control={control}
                 name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="new-password"
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <TextField
+                    type="password"
+                    fullWidth
+                    label="Password"
+                    error={!!errors.password}
+                    helperText={errors.password && 'Please enter a password'}
+                    {...field}
+                  />
+                )}
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name="retype-password"
-                label="Retype Password"
-                type="password"
-                id="retype-password"
-                autoComplete="retype-password"
+              <Controller
+                control={control}
+                name="retypePassword"
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <TextField
+                    type="password"
+                    fullWidth
+                    label="Retype Password"
+                    error={!!errors.retypePassword}
+                    helperText={errors.retypePassword && 'Please enter a current password'}
+                    {...field}
+                  />
+                )}
               />
             </Grid>
             {/* <Grid item xs={12}>
-            <FormControlLabel
-              control={<Checkbox value="allowExtraEmails" color="primary" />}
-              label="I want to receive inspiration, marketing promotions and updates via email."
-            />
-          </Grid> */}
+              <Controller
+                control={control}
+                name="allowExtraEmails"
+                render={({ field: { value, onChange } }) => (
+                  <FormControlLabel
+                    control={<Checkbox checked={value} onChange={onChange} />}
+                    label="I want to receive inspiration, marketing promotions and updates via email."
+                  />
+                )}
+              />
+            </Grid> */}
           </Grid>
           <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
             Sign Up
