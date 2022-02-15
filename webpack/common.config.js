@@ -20,13 +20,15 @@ module.exports = {
     rules: [
       {
         test: /\.ts(x)?$/,
-        use: ['babel-loader'],
+        use: [{
+            loader: 'babel-loader',
+            options: {
+                cacheDirectory: true,
+                // https://stackoverflow.com/questions/63946531/uncaught-referenceerror-regeneratorruntime-is-not-defined
+                plugins: ['@babel/plugin-transform-runtime']
+            }
+        }],
         exclude: /node_modules/,
-      },
-      {
-          test: /\.(js|jsx)$/,
-          exclude: /node_modules/,
-          use: ["babel-loader"],
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
