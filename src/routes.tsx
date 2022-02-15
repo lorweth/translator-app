@@ -11,7 +11,7 @@ import { RouteObject } from 'react-router-dom';
 // import Welcome from './pages/WelcomePage/WelcomePage';
 // import MainLayout from './shared/layouts/main-layout';
 
-const MainLayout = React.lazy(() => import('src/shared/layouts/main-layout'));
+// const MainLayout = React.lazy(() => import('src/shared/layouts/main-layout'));
 const Welcome = React.lazy(() => import('./pages/WelcomePage/WelcomePage'));
 const Favorites = React.lazy(() => import('./pages/FavoritesPage/FavoritesPage'));
 const Translate = React.lazy(() => import('./pages/TranslatePage/TranslatePage'));

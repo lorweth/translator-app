@@ -14,7 +14,7 @@ const App = () => {
   return (
     <Router>
       <MainLayout>
-        <Suspense fallback={<LinearProgress />}>
+        <Suspense fallback={<LinearProgress color="secondary" />}>
           <BrowerRouterProvider />
         </Suspense>
       </MainLayout>
