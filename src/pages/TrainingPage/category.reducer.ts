@@ -8,6 +8,7 @@ type StateType = {
   category: ICategory;
   loading: boolean;
   errorMessage: string;
+  totalItems: number;
 };
 
 const initialState: StateType = {
@@ -15,6 +16,7 @@ const initialState: StateType = {
   category: defaultValue,
   loading: false,
   errorMessage: null,
+  totalItems: 0,
 };
 
 const apiUrl = `${process.env.API_URL}/categories`;
@@ -25,7 +27,7 @@ export const getAllCategories = createAsyncThunk(
   'category/fetch_all_categories',
   async () => {
     const res = await axios.get<ICategory[]>(apiUrl);
-    return res.data;
+    return res;
   },
   {
     serializeError: serializeAxiosError,
@@ -35,8 +37,8 @@ export const getAllCategories = createAsyncThunk(
 export const findCategoryByName = createAsyncThunk(
   'category/fetch_category_by_name',
   async (name: string) => {
-    const res = await axios.get<ICategory>(`${apiUrl}?name=${name}`);
-    return res.data;
+    const res = await axios.get<ICategory[]>(`${apiUrl}?name=${name}`);
+    return res;
   },
   {
     serializeError: serializeAxiosError,
@@ -56,16 +58,17 @@ const categorySlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(getAllCategories.fulfilled, (state, action) => {
-        state.categories = action.payload;
+        state.categories = action.payload.data;
         state.loading = false;
         state.errorMessage = null;
+        state.totalItems = action.payload.data.length;
       })
       .addCase(getAllCategories.pending, state => {
         state.loading = true;
         state.errorMessage = null;
       })
       .addCase(findCategoryByName.fulfilled, (state, action) => {
-        state.categories = [action.payload];
+        state.categories = action.payload.data;
         state.loading = false;
       })
       .addCase(findCategoryByName.pending, state => {
