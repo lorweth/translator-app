@@ -1,26 +1,30 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  Avatar,
-  Box,
-  Button,
-  Container,
-  CssBaseline,
-  Grid,
-  TextField,
-  Typography,
-} from '@mui/material';
-import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Avatar, Box, Container, CssBaseline, Grid, TextField, Typography } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import React, { useEffect } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { useAppDispatch, useAppSelector } from 'src/configs/store';
+import { updateProfile } from 'src/shared/reducers/authentication';
 
 const Profile = () => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  const dispatch = useAppDispatch();
+  const account = useAppSelector(state => state.authentication.account);
+  const loading = useAppSelector(state => state.authentication.loading);
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      username: account.username,
+      firstName: account.firstName || '',
+      lastName: account.lastName || '',
+    },
+  });
+
+  const onSubmit = values => {
+    dispatch(updateProfile(values));
   };
 
   return (
@@ -40,43 +44,61 @@ const Profile = () => {
         <Typography component="h1" variant="h5">
           Edit your profile
         </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="given-name"
+              <Controller
+                control={control}
                 name="firstName"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <TextField
+                    autoComplete="given-name"
+                    required
+                    fullWidth
+                    label="First Name"
+                    autoFocus
+                    {...field}
+                  />
+                )}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
+              <Controller
+                control={control}
                 name="lastName"
-                autoComplete="family-name"
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <TextField
+                    required
+                    fullWidth
+                    label="Last Name"
+                    autoComplete="family-name"
+                    {...field}
+                  />
+                )}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 required
                 fullWidth
-                id="email"
+                id="username"
                 label="Email Address"
                 name="email"
-                autoComplete="email"
+                placeholder={account.username}
               />
             </Grid>
           </Grid>
-          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+          <LoadingButton
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            loading={loading}
+          >
             Accept
-          </Button>
+          </LoadingButton>
         </Box>
       </Box>
     </Container>

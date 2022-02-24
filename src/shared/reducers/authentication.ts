@@ -4,7 +4,7 @@ import { AppThunk } from 'src/configs/store';
 import { StorageAPI } from 'src/shared/util/storage-util';
 import { serializeAxiosError } from './reducer.utils';
 
-const AUTH_TOKEN_KEY = 'authToken';
+export const AUTH_TOKEN_KEY = 'authToken';
 const API_URL = process.env.API_URL;
 
 export const initialState = {
@@ -28,6 +28,21 @@ export const getAccount = createAsyncThunk(
   'authentication/get_account',
   async () =>
     axios.get<any>(`${API_URL}/users/profile`, {
+      headers: {
+        Authorization: `Bearer ${
+          StorageAPI.local.get(AUTH_TOKEN_KEY) || StorageAPI.session.get(AUTH_TOKEN_KEY)
+        }`,
+      },
+    }),
+  {
+    serializeError: serializeAxiosError,
+  }
+);
+
+export const updateProfile = createAsyncThunk(
+  'authentication/update_profile',
+  async (data: any) =>
+    axios.put<any>(`${API_URL}/users`, data, {
       headers: {
         Authorization: `Bearer ${
           StorageAPI.local.get(AUTH_TOKEN_KEY) || StorageAPI.session.get(AUTH_TOKEN_KEY)
@@ -161,6 +176,15 @@ export const AuthenticationSlice = createSlice({
         state.loading = true;
       })
       .addCase(getAccount.pending, state => {
+        state.loading = true;
+      })
+      .addCase(updateProfile.fulfilled, (state, action) => {
+        state.account = action.payload.data;
+        state.loading = false;
+        state.errorMessage = null;
+      })
+      .addCase(updateProfile.pending, state => {
+        state.account = {};
         state.loading = true;
       });
   },

@@ -38,7 +38,7 @@ const CategoryPage = () => {
   };
 
   return (
-    <Box sx={{ flewGrown: 1, mb: 2 }}>
+    <Box sx={{ flexGrown: 1, mb: 2 }}>
       <Box component="form" onSubmit={e => onClickSearchButton(e)} noValidate sx={{ mt: 1 }}>
         <Grid container spacing={2}>
           <Grid item xs={8} md={10}>
