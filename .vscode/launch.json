@@ -13,5 +13,13 @@
       ],
       "type": "pwa-node"
     },
+    {
+      "name": "Attach to Edge",
+      "port": 4200,
+      "request": "attach",
+      "type": "pwa-msedge",
+      "webRoot": "${workspaceFolder}"
+    }
+    
   ]
 }

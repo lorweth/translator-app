@@ -3,6 +3,7 @@ import {
   faAddressCard,
   faArrowLeft,
   faArrowRight,
+  faArrowRightArrowLeft,
   faArrowRightLong,
   faBars,
   faBell,
@@ -53,7 +54,8 @@ export const loadIcon = () => {
     faUserShield,
     faAddressCard,
     faBell,
-    faArrowRightLong
+    faArrowRightLong,
+    faArrowRightArrowLeft
     // Add more icons here
   );
 };
