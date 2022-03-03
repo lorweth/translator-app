@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, isFulfilled } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { serializeAxiosError } from 'src/shared/reducers/reducer.utils';
-import ICategory, { defaultValue } from '../../shared/models/category';
+import ICategory, { defaultValue } from '../models/category';
 
 type StateType = {
   categories: ReadonlyArray<ICategory>;

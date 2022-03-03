@@ -1,10 +1,7 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 
 const Video = () => {
-  return (
-    <div>
-      <h1>Video</h1>
-    </div>
-  );
+  return <Outlet />;
 };
 export default Video;

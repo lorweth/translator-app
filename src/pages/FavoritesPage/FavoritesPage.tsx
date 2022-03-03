@@ -41,7 +41,6 @@ const Favorites = () => {
 
   return (
     <Box sx={{ flexGrow: 1, mb: 2 }}>
-      <h1>Favorites</h1>
       <Box>
         {loading ? (
           <LinearProgress />
@@ -75,7 +74,7 @@ const Favorites = () => {
                 </Grid>
               ))
             ) : (
-              <Button variant="contained" color="warning" fullWidth>
+              <Button size="large" variant="contained" color="warning" fullWidth>
                 No result
               </Button>
             )}
