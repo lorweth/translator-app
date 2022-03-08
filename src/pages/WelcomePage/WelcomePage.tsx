@@ -26,6 +26,10 @@ const Welcome = () => {
       {isAuthenticated ? (
         <div>
           <p>Hello {firstName && lastName ? `${firstName} ${lastName}` : username}</p>
+          <Button variant="outlined" color="secondary" onClick={() => navigate('/update-password')}>
+            Update Password
+          </Button>
+          &nbsp;
           <Button variant="outlined" color="error" onClick={() => dispatch(logout())}>
             Logout
           </Button>

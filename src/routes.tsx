@@ -13,6 +13,7 @@ const VideoList = React.lazy(() => import('./pages/VideoPage/VideoList'));
 const Profile = React.lazy(() => import('./pages/ProfilePage/ProfilePage'));
 const LoginPage = React.lazy(() => import('./pages/LoginPage/LoginPage'));
 const SignUpPage = React.lazy(() => import('./pages/SignUpPage/SignUpPage'));
+const UpdatePassword = React.lazy(() => import('./pages/UpdatePasswordPage/UpdatePassword'));
 
 const ROUTES: RouteObject[] = [
   { path: '/', element: <Welcome /> },
@@ -41,6 +42,7 @@ const ROUTES: RouteObject[] = [
   { path: 'profile', element: <Profile /> },
   { path: 'login', element: <LoginPage /> },
   { path: 'signup', element: <SignUpPage /> },
+  { path: 'update-password', element: <UpdatePassword /> },
   // Add some route here
 ];
 
