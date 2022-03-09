@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useAppDispatch, useAppSelector } from 'src/configs/store';
 import Avatar from '@mui/material/Avatar';
@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { toast } from 'react-toastify';
-import { updateProfile } from 'src/shared/reducers/authentication';
+import { updatePassword } from 'src/shared/reducers/authentication';
 import { useNavigate } from 'react-router-dom';
 
 type TFormDefaultValue = {
@@ -20,13 +20,26 @@ type TFormDefaultValue = {
 const UpdatePassword = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
   const loading = useAppSelector(state => state.authentication.loading);
+  const account = useAppSelector(state => state.authentication.account);
+  const message = useAppSelector(state => state.authentication.message);
+  const errorMessage = useAppSelector(state => state.authentication.errorMessage);
 
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<TFormDefaultValue>();
+
+  useEffect(() => {
+    if (errorMessage) {
+      toast.error(errorMessage);
+    }
+    if (message) {
+      toast.success('Password has been updated');
+    }
+  }, [loading]);
 
   const onSubmit = values => {
     let error = false;
@@ -40,12 +53,13 @@ const UpdatePassword = () => {
     }
 
     if (!error) {
-      dispatch(updateProfile({ password: values.newPassword }))
-        .then(() => {
-          toast.success('Password update successfully');
-          navigate('/');
+      dispatch(
+        updatePassword({
+          _id: account._id,
+          oldPassword: values.currentPassword,
+          newPassword: values.newPassword,
         })
-        .catch(() => toast.error('Password update failed'));
+      );
     }
   };
 

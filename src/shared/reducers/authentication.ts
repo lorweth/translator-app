@@ -14,6 +14,7 @@ export const initialState = {
   loginError: false, // Errors returned from the server
   showModalLogin: false,
   account: {} as any, // User account
+  message: null as unknown as string,
   errorMessage: null as unknown as string,
   redirectMessage: null as unknown as string,
   sessionHasBeenFetched: false,
@@ -43,6 +44,21 @@ export const updateProfile = createAsyncThunk(
   'authentication/update_profile',
   async (data: any) =>
     axios.put<any>(`${API_URL}/users`, data, {
+      headers: {
+        Authorization: `Bearer ${
+          StorageAPI.local.get(AUTH_TOKEN_KEY) || StorageAPI.session.get(AUTH_TOKEN_KEY)
+        }`,
+      },
+    }),
+  {
+    serializeError: serializeAxiosError,
+  }
+);
+
+export const updatePassword = createAsyncThunk(
+  'authentication/update_password',
+  async (data: any) =>
+    axios.put<any>(`${API_URL}/users/password`, data, {
       headers: {
         Authorization: `Bearer ${
           StorageAPI.local.get(AUTH_TOKEN_KEY) || StorageAPI.session.get(AUTH_TOKEN_KEY)
@@ -186,6 +202,18 @@ export const AuthenticationSlice = createSlice({
       .addCase(updateProfile.pending, state => {
         state.account = {};
         state.loading = true;
+      })
+      .addCase(updatePassword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.message = action.payload.data.message;
+      })
+      .addCase(updatePassword.pending, state => {
+        state.loading = true;
+        state.message = null;
+      })
+      .addCase(updatePassword.rejected, (state, action) => {
+        state.loading = false;
+        state.errorMessage = action.error.message;
       });
   },
 });
