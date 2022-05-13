@@ -27,11 +27,7 @@ module.exports = {
       },
     },
     minimize: true,
-    minimizer: [
-      new TerserPlugin(),
-      new CssMinimizerPlugin(),
-      new CleanWebpackPlugin(),
-    ],
+    minimizer: [new TerserPlugin(), new CssMinimizerPlugin(), new CleanWebpackPlugin()],
   },
   plugins: [
     new CopyPlugin({
@@ -55,7 +51,11 @@ module.exports = {
         {
           from: resolve(PUBLIC, 'logo512.png'),
           to: DIST,
-        }
+        },
+        {
+          from: resolve(PUBLIC, 'greeting.jpg'),
+          to: DIST,
+        },
       ],
       options: {
         concurrency: 100,

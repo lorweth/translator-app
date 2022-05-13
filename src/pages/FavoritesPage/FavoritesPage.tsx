@@ -16,6 +16,7 @@ import { useAppDispatch, useAppSelector } from 'src/configs/store';
 import { deleteFavoriteWord, getAllFavorites } from 'src/shared/reducers/favorite.reducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { toast } from 'react-toastify';
+import { grey } from '@mui/material/colors';
 
 const Favorites = () => {
   const dispatch = useAppDispatch();
@@ -74,9 +75,14 @@ const Favorites = () => {
                 </Grid>
               ))
             ) : (
-              <Button size="large" variant="contained" color="warning" fullWidth>
-                No result
-              </Button>
+              <Grid item xs={12}>
+                <Typography
+                  variant="body1"
+                  sx={{ padding: 1, backgroundColor: 'white', color: grey[700] }}
+                >
+                  No favorite here
+                </Typography>
+              </Grid>
             )}
           </Grid>
         )}

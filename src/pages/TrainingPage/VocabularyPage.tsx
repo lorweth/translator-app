@@ -16,6 +16,7 @@ import { useAppDispatch, useAppSelector } from 'src/configs/store';
 import { getAllVocabulariesOfTheCategory } from './vocabulary.reducer';
 import { updateFavoriteWord } from 'src/shared/reducers/favorite.reducer';
 import { toast } from 'react-toastify';
+import { grey } from '@mui/material/colors';
 
 const VocabularyPage = () => {
   const params = useParams();
@@ -101,9 +102,12 @@ const VocabularyPage = () => {
               ))
             ) : (
               <Grid item xs={12} md={12}>
-                <Button variant="contained" color="warning" fullWidth size="large">
+                <Typography
+                  variant="body1"
+                  sx={{ padding: 1, backgroundColor: 'white', color: grey[700] }}
+                >
                   No vocabulary found
-                </Button>
+                </Typography>
               </Grid>
             )}
           </Grid>

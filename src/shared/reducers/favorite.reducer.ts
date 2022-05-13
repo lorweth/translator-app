@@ -6,13 +6,13 @@ import { StorageAPI } from 'src/shared/util/storage-util';
 import { AUTH_TOKEN_KEY } from 'src/shared/reducers/authentication';
 
 const apiUrl = process.env.API_URL + '/users' + '/favorite-vocabularies';
-const configs = {
+const configs = () => ({
   headers: {
     Authorization: `Bearer ${
       StorageAPI.local.get(AUTH_TOKEN_KEY) || StorageAPI.session.get(AUTH_TOKEN_KEY)
     }`,
   },
-};
+});
 
 interface FavoriteState {
   favoriteList: ReadonlyArray<IVocabulary>;
@@ -41,7 +41,7 @@ type ResponseType = {
 export const getAllFavorites = createAsyncThunk(
   'favorite/fetch_all_favorite_words',
   async () => {
-    const response = await axios.get<ResponseType>(apiUrl, configs);
+    const response = await axios.get<ResponseType>(apiUrl, configs());
     return response.data;
   },
   {
@@ -52,7 +52,7 @@ export const getAllFavorites = createAsyncThunk(
 export const updateFavoriteWord = createAsyncThunk(
   'favorite/update_favorite_word',
   async (vocabularyId: string) => {
-    const res = await axios.put<any>(apiUrl, { vocabularyId }, configs);
+    const res = await axios.put<any>(apiUrl, { vocabularyId }, configs());
     return res.data;
   },
   {
@@ -63,7 +63,7 @@ export const updateFavoriteWord = createAsyncThunk(
 export const deleteFavoriteWord = createAsyncThunk(
   'favorite/delete_favorite_word',
   async (vocabularyId: string) => {
-    const res = await axios.delete(apiUrl + `/${vocabularyId}`, configs);
+    const res = await axios.delete(apiUrl + `/${vocabularyId}`, configs());
     return res.data;
   },
   {

@@ -1,4 +1,14 @@
-import { Box, Button, Divider, Grid, LinearProgress, Paper, TextField } from '@mui/material';
+import {
+  Box,
+  Button,
+  Divider,
+  Grid,
+  LinearProgress,
+  Paper,
+  TextField,
+  Typography,
+} from '@mui/material';
+import { grey } from '@mui/material/colors';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from 'src/configs/store';
@@ -71,9 +81,12 @@ const VideoCategory = () => {
               ))
             ) : (
               <Grid item xs={12} md={12} key={'no-category'}>
-                <Button size="large" color="warning" variant="contained" fullWidth>
-                  No Videos here
-                </Button>
+                <Typography
+                  variant="body1"
+                  sx={{ padding: 1, backgroundColor: 'white', color: grey[700] }}
+                >
+                  No video here
+                </Typography>
               </Grid>
             )}
           </Grid>
