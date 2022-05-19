@@ -1,24 +1,10 @@
-import React, { Suspense } from 'react';
-import { BrowserRouter as Router, useRoutes } from 'react-router-dom';
-import 'react-toastify/dist/ReactToastify.css';
-import ROUTES from './routes';
-import { LinearProgress } from '@mui/material';
-import MainLayout from './shared/layouts/main-layout';
-
-const BrowerRouterProvider = () => {
-  const routeElements = useRoutes(ROUTES);
-  return routeElements;
-};
+import React from 'react';
 
 const App = () => {
   return (
-    <Router>
-      <MainLayout>
-        <Suspense fallback={<LinearProgress color="secondary" />}>
-          <BrowerRouterProvider />
-        </Suspense>
-      </MainLayout>
-    </Router>
+   <div>
+      <h1>Hello World</h1>
+   </div>
   );
 };
 export default App;
