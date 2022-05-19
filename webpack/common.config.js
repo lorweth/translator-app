@@ -6,13 +6,13 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
     alias: {
-        "src": path.resolve('./src'),
-        'react-dom': '@hot-loader/react-dom'
+      src: path.resolve('./src'),
+      'react-dom': '@hot-loader/react-dom',
     },
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, "../public", "index.html"),
+      template: path.join(__dirname, '../public', 'index.html'),
       inject: 'body',
     }),
   ],
@@ -20,26 +20,21 @@ module.exports = {
     rules: [
       {
         test: /\.ts(x)?$/,
-        use: [{
+        use: [
+          {
             loader: 'babel-loader',
             options: {
-                cacheDirectory: true,
-                // https://stackoverflow.com/questions/63946531/uncaught-referenceerror-regeneratorruntime-is-not-defined
-                plugins: ['@babel/plugin-transform-runtime']
-            }
-        }],
+              cacheDirectory: true,
+              // https://stackoverflow.com/questions/63946531/uncaught-referenceerror-regeneratorruntime-is-not-defined
+              plugins: ['@babel/plugin-transform-runtime'],
+            },
+          },
+        ],
         exclude: /node_modules/,
       },
       {
         test: /\.(png|svg|jpg|gif)$/,
         use: ['file-loader'],
-      },
-      { 
-        test: /\.(json)$/, 
-        use: { 
-          loader: 'file-loader', 
-          options: { name: '[name].[ext]', outputPath: './' } 
-        } 
       },
       {
         test: /\.woff($|\?)|\.woff2($|\?)|\.ttf($|\?)|\.eot($|\?)|\.svg($|\?)/,
