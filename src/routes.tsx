@@ -1,5 +1,5 @@
 import React from 'react';
-import { RouteObject } from 'react-router-dom';
+import { Route, RouteObject, Routes, useLocation, useRoutes } from 'react-router-dom';
 
 const Welcome = React.lazy(() => import('./pages/WelcomePage/WelcomePage'));
 const Favorites = React.lazy(() => import('./pages/FavoritesPage/FavoritesPage'));
@@ -15,7 +15,7 @@ const LoginPage = React.lazy(() => import('./pages/LoginPage/LoginPage'));
 const SignUpPage = React.lazy(() => import('./pages/SignUpPage/SignUpPage'));
 const UpdatePassword = React.lazy(() => import('./pages/UpdatePasswordPage/UpdatePassword'));
 
-const ROUTES: RouteObject[] = [
+const ROUTES: Array<RouteObject> = [
   { path: '/', element: <Welcome /> },
   { path: 'welcome', element: <Welcome /> },
   { path: 'favorites', element: <Favorites /> },
@@ -46,4 +46,26 @@ const ROUTES: RouteObject[] = [
   // Add some route here
 ];
 
-export default ROUTES;
+const modalRoutes: Array<RouteObject> = [];
+
+export default function RouterProvider() {
+  const location = useLocation();
+  const state = location.state as { backgroundLocation?: Location };
+
+  const elm = useRoutes(ROUTES, state?.backgroundLocation || location);
+
+  return (
+    <>
+      {elm}
+
+      {/* Show the modal when a `backgroundLocation` is set */}
+      {state?.backgroundLocation && (
+        <Routes>
+          {modalRoutes &&
+            modalRoutes.length > 0 &&
+            modalRoutes.map(r => <Route key={r.path} path={r.path} element={r.element} />)}
+        </Routes>
+      )}
+    </>
+  );
+}
